@@ -1,22 +1,29 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace EF_Exam
 {
     public class Collections
     {
         PlateStore db = new();
+        public decimal TotalCash { get; set; }
+        public Dictionary<int, int> GenreId_Discount { get; set; } = new();
 
-        ObservableCollection<Plate> Plates { get; set; }
-        ObservableCollection<Publisher> Publishers { get; set; }
-        ObservableCollection<Genre> Genres { get; set; }
-        ObservableCollection<Band> Bands { get; set; }
-        ObservableCollection<Customer> Customers { get; set; }
-        ObservableCollection<Promotion> Promotions { get; set; }
+        public ObservableCollection<Plate> Plates { get; set; }
+        public ObservableCollection<Publisher> Publishers { get; set; }
+        public ObservableCollection<Genre> Genres { get; set; }
+        public ObservableCollection<Band> Bands { get; set; }
+        public ObservableCollection<Customer> Customers { get; set; }
+        public ObservableCollection<Promotion> Promotions { get; set; }
+        public ObservableCollection<Plate> SoldPlates { get; set; }
+        public ObservableCollection<Plate> ScrappedPlates { get; set; }
 
         public Collections()
         {
@@ -96,7 +103,7 @@ namespace EF_Exam
 
             foreach (var genre in db.Genres)
             {
-                decimal randomDiscount = new Random().Next(7, 12);
+                int randomDiscount = new Random().Next(7, 12);
                 db.Promotions.Add(new Promotion() { Name = $"Week of {genre.Name}", PromotionDiscount = randomDiscount });
             }
 
@@ -907,6 +914,228 @@ namespace EF_Exam
 
             db.Plates.AddRange(plates);
             db.SaveChanges();
+
+            Plates = new(db.Plates);
+            Customers = new(db.Customers);
+            Bands = new(db.Bands);
+            Publishers = new(db.Publishers);
+            Genres = new(db.Genres);
+            Promotions = new(db.Promotions);
+            SoldPlates = new(Plates.Where(x => x.IsSold));
+            ScrappedPlates = new();
+
+            //Plates.CollectionChanged += (sender, e) =>
+            //{
+            //    if (e.Action == NotifyCollectionChangedAction.Add)
+            //    {
+            //        foreach (Plate plate in e.NewItems)
+            //        {
+            //            //if ((plate.BandId >= 1 && plate.BandId <= Bands.OrderByDescending(x => x.Id).First().Id) &&
+            //            //    plate.GenreId >= 1 && plate.GenreId <= Genres.OrderByDescending(x => x.Id).First().Id &&
+            //            //    plate.PublisherId >= 1 && plate.PublisherId <= Publishers.OrderByDescending(x => x.Id).First().Id)
+            //            //{
+            //                db.Plates.Add(plate);
+            //            //}
+            //            //else
+            //            //    MessageBox.Show("Wrong input data");
+            //        }
+            //    }
+            //    else if (e.Action == NotifyCollectionChangedAction.Remove)
+            //    {
+            //        foreach (Plate plate in e.OldItems)
+            //        {
+            //            db.Plates.Remove(plate);
+            //        }
+            //    }
+            //    else if (e.Action == NotifyCollectionChangedAction.Replace)
+            //    {
+            //        foreach (Plate plate in e.NewItems)
+            //        {
+            //            int index = e.NewItems.IndexOf(plate);
+            //            Plate oldplate = e.OldItems[index] as Plate;
+
+            //            if ((plate.BandId >= 1 && plate.BandId <= Bands.OrderByDescending(x => x.Id).First().Id) &&
+            //                plate.GenreId >= 1 && plate.GenreId <= Genres.OrderByDescending(x => x.Id).First().Id &&
+            //                plate.PublisherId >= 1 && plate.PublisherId <= Publishers.OrderByDescending(x => x.Id).First().Id)
+            //            {
+            //                db.Plates.Remove(oldplate);
+            //                db.Plates.Add(plate);
+            //            }
+            //            else
+            //            {
+            //                Plates[index] = oldplate;
+            //                MessageBox.Show("Some of changed elements has wrong data, they`ll stay unchanged");
+            //            }
+            //        }
+
+            //    }
+            //};
+        }
+
+        public void SavePlatesChanges()
+        {
+            try
+            {
+                if (Plates.Count > db.Plates.Count())
+                {
+                    var newplates = Plates.Except(db.Plates.AsEnumerable());
+                    foreach (var plate in newplates)
+                    {
+                        bool errors = false;
+
+                        if (plate.BandId != null)
+                        {
+                            if (plate.BandId < 1 || plate.BandId > db.Bands.OrderByDescending(x => x.Id).First().Id)
+                            {
+                                errors = true;
+                                MessageBox.Show("Wrong BandId");
+                            }
+                        }
+                        if (plate.GenreId != null)
+                        {
+                            if (plate.GenreId < 1 || plate.GenreId > db.Genres.OrderByDescending(x => x.Id).First().Id)
+                            {
+                                errors = true;
+                                MessageBox.Show("Wrong GenreId");
+                            }
+                        }
+                        if (plate.PublisherId != null)
+                        {
+                            if (plate.PublisherId < 1 || plate.PublisherId > db.Publishers.OrderByDescending(x => x.Id).First().Id)
+                            {
+                                errors = true;
+                                MessageBox.Show("Wrong PublisherId");
+                            }
+                        }
+                        if (plate.CustomerId != null)
+                        {
+                            if (plate.CustomerId < 1 || plate.CustomerId > db.Customers.OrderByDescending(x => x.Id).First().Id)
+                            {
+                                errors = true;
+                                MessageBox.Show("Wrong CustomerId");
+                            }
+                            else
+                            {
+                                if (plate.SoldDate == null)
+                                {
+                                    errors = true;
+                                    MessageBox.Show("SoldDate must be declare");
+                                }
+                                else
+                                {
+                                    if (plate.SoldDate < plate.DeliveryDate)
+                                    {
+                                        errors = true;
+                                        MessageBox.Show("SoldDate can`t be lesser than DeliveryDate");
+                                    }
+                                }
+                            }
+                        }
+
+                        if (!errors)
+                        {
+                            db.Plates.Add(plate);
+                        }
+                        else
+                            MessageBox.Show("Wrong input data");
+                    }
+                    db.SaveChanges();
+                }
+                else if (Plates.Count < db.Plates.Count())
+                {
+                    var oldplates = db.Plates.AsEnumerable().Except(Plates);
+
+                    foreach (var plate in oldplates)
+                        db.Plates.Remove(plate);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    var plates = db.ChangeTracker.Entries<Plate>()
+                        .Where(x => x.State == EntityState.Modified).Select(x => new
+                        {
+                            Plate = x.Entity,
+                            //CurrentValues = x.CurrentValues,
+                            OriginalValues = x.OriginalValues
+                        });
+
+                    foreach (var el in plates)
+                    {
+                        var plate = el.Plate;
+                        //var currentValues = el.CurrentValues;
+                        var originalValues = el.OriginalValues;
+
+                        bool errors = false;
+
+                        if (plate.BandId != null)
+                        {
+                            if (plate.BandId < 1 || plate.BandId > db.Bands.OrderByDescending(x => x.Id).First().Id)
+                            {
+                                errors = true;
+                                plate.BandId = (int?)originalValues["BandId"];
+                                MessageBox.Show("Wrong BandId");
+                            }
+                        }
+                        if (plate.GenreId != null)
+                        {
+                            if (plate.GenreId < 1 || plate.GenreId > db.Genres.OrderByDescending(x => x.Id).First().Id)
+                            {
+                                errors = true;
+                                plate.GenreId = (int?)originalValues["GenreId"];
+                                MessageBox.Show("Wrong GenreId");
+                            }
+                        }
+                        if (plate.PublisherId != null)
+                        {
+                            if (plate.PublisherId < 1 || plate.PublisherId > db.Publishers.OrderByDescending(x => x.Id).First().Id)
+                            {
+                                errors = true;
+                                plate.PublisherId = (int?)originalValues["PublisherId"];
+                                MessageBox.Show("Wrong PublisherId");
+                            }
+                        }
+                        if (plate.CustomerId != null)
+                        {
+                            if (plate.CustomerId < 1 || plate.CustomerId > db.Customers.OrderByDescending(x => x.Id).First().Id)
+                            {
+                                errors = true;
+                                plate.CustomerId = (int?)originalValues["CustomerId"];
+                                MessageBox.Show("Wrong CustomerId");
+                            }
+                            else
+                            {
+                                if (plate.SoldDate == null)
+                                {
+                                    plate.SoldDate = plate.DeliveryDate.AddDays(1);
+                                }
+                            }
+                        }
+
+                        if (errors)
+                        {
+                            MessageBox.Show("This plate was reset to original state because of wrong input data");
+                        }
+                    }
+                    db.SaveChanges();
+                }
+
+                Plates = new(db.Plates);
+                Customers = new(db.Customers);
+                Bands = new(db.Bands);
+                Publishers = new(db.Publishers);
+                Genres = new(db.Genres);
+                Promotions = new(db.Promotions);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.InnerException.Message);
+                Plates = new(db.Plates);
+                Customers = new(db.Customers);
+                Bands = new(db.Bands);
+                Publishers = new(db.Publishers);
+                Genres = new(db.Genres);
+                Promotions = new(db.Promotions);
+            }
         }
 
     };

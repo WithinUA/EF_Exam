@@ -12,23 +12,23 @@ namespace EF_Exam
     public class Plate
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public int TrackCount { get; set; }
+        public string Name { get; set; } = "NoName";
+        public int TrackCount { get; set; } = 12;
         public int? BandId { get; set; }
         public Band? Band { get; set; }
         public int? GenreId { get; set; }
         public Genre? Genre { get; set; }
         public int? PublisherId { get; set; }
         public Publisher? Publisher { get; set; }
-        public int PublishingYear { get; set; }
-        public decimal SelfCoast { get; set; }
-        public decimal Price { get; set; }
+        public int PublishingYear { get; set; } = 1997;
+        public decimal SelfCoast { get; set; } = 8m;
+        public decimal Price { get; set; } = 15m;
         public int? CustomerId { get; set; }
         public Customer? Customer { get; set; }
         public DateTime? SoldDate { get; set; }
-        public DateTime DeliveryDate { get; set; }
-        public int SoldCount { get; set; }
-        public bool IsSold { get; set; }
+        public DateTime DeliveryDate { get; set; } = DateTime.Now;
+        public int SoldCount { get; set; } = 0;
+        public bool IsSold { get; set; } = false;
     }
 
     public class Publisher
@@ -59,7 +59,7 @@ namespace EF_Exam
         public string FirstName { get; set; } = "NoNameCustomer";
         public string LastName { get; set; }
         public decimal SpentMoney { get; set; }
-        public double DiscountPercent { get; set; } = 0;
+        public int DiscountPercent { get; set; } = 0;
         [NotMapped]
         private string login;
         [NotMapped]
@@ -75,7 +75,7 @@ namespace EF_Exam
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public decimal PromotionDiscount { get; set; }
+        public int PromotionDiscount { get; set; }
     }
 
     public class PlateStore : DbContext
@@ -130,6 +130,7 @@ namespace EF_Exam
                 .WithMany()
                 .HasForeignKey(x => x.GenreId)
                 .OnDelete(DeleteBehavior.SetNull);
+
         }
     }
 }

@@ -17,13 +17,30 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        
+            <Image Source="/pngwing.com (1).png" Width="220"/>
 
-        <Border Grid.Row="1" Width="280" Height="50" Background="#DDDDDD" CornerRadius="25" Padding="2">
-            <TextBox Width="240" Height="40" Background="Transparent" BorderThickness="0" Text="Login" FontSize="22" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Border Grid.Row="1" Width="280" Height="50" Background="#D5D6D8" CornerRadius="25" Padding="2">
+            <TextBox x:Name="login_box" Width="240" Height="40" Background="Transparent" BorderThickness="0" Text="Login" Foreground="Gray" FontSize="22" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewMouseDown="click_login_ev"/>
         </Border>
-        <Border Grid.Row="2" Width="280" Height="50" Background="#DDDDDD" CornerRadius="25" Padding="2">
-            <PasswordBox Width="240" Height="40" Background="Transparent" BorderThickness="0" Password="Login" FontSize="22" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Border Grid.Row="2" Width="280" Height="50" Background="#D5D6D8" CornerRadius="25" Padding="2">
+            <PasswordBox x:Name="pass_box" Width="240" Height="40" Background="Transparent" BorderThickness="0" Password="Password" Foreground="Gray" FontSize="22" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" GotFocus="pass_click_ev"/>
         </Border>
-
+        <Border Grid.Row="3" Width="280" Height="50" Background="#4EB4D4" CornerRadius="25" Padding="2">
+            <Button Content="Log In" Width="250" Height="40" BorderThickness="0" FontSize="28" FontFamily="Impact" Background="Transparent" Click="login_button_ev"/>
+        </Border>
+        <!--<Border Grid.Row="4" Width="180" Height="40" Background="#B2F3FF" CornerRadius="25" Padding="2">
+            <Button Content="Login as guest"
+                    Padding="0"
+                    Width="150"
+                    Height="40"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    FontSize="28"
+                    FontStyle="Italic"
+                    FontFamily="Gabriola"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center" Click="guest_click_ev" />
+        </Border>-->
     </Grid>
 </Window>

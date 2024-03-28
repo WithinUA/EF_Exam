@@ -5,11 +5,419 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EF_Exam"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MusicStore" Height="850" Width="1200">
     <Window.Background>
         <ImageBrush ImageSource="/1670331109_1-kartinkin-net-p-vinilovaya-plastinka-kartinka-oboi-1.jpg" Stretch="UniformToFill"/>
     </Window.Background>
-    <Grid>
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.3*"/>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="4*"/>
+        </Grid.RowDefinitions>
+
+        <Image x:Name="scull_img"
+               Source="/pngwing.com (1).png"
+               RenderTransformOrigin="0.5,0.5"
+               Grid.Column="2"
+               Grid.RowSpan="2"/>
+        
+        <Border Grid.Row="3"
+                Grid.RowSpan="2"
+                Style="{StaticResource border_for_label}"
+                Width="170">
+            <Label Content="PLATES"
+                       Style="{StaticResource label_in_border}"/>
+        </Border>
+
+        <Border Grid.Column="1"
+                Grid.Row="3"
+                Grid.RowSpan="2"
+                Style="{StaticResource border_for_label}">
+            <Label Content="Customers"
+                   Style="{StaticResource label_in_border}"/>
+        </Border>
+
+        <Border Grid.Column="3"
+                Grid.Row="3"
+                Grid.RowSpan="2"
+                Style="{StaticResource border_for_label}">
+            <Label Content="Promotions"
+                   Style="{StaticResource label_in_border}"/>
+        </Border>
+
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Border Style="{StaticResource border_for_button}">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF012539"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Button Style="{StaticResource button_in_border}"
+            Content="All Plates"
+            Click="all_plates_ev"/>
+            </Border>
+
+
+
+            <Border Style="{StaticResource border_for_button}"
+        Grid.Column="1">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF012539"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Button Content="Sell The Plate"
+            Style="{StaticResource button_in_border}"
+            Click="sell_the_plate_ev" />
+            </Border>
+
+            <Border Style="{StaticResource border_for_button}"
+        Grid.Column="2">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF012539"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Button Content="Scrap The Plate"
+            Style="{StaticResource button_in_border}"
+            FontSize="14"
+            Click="scrap_plate_ev" />
+            </Border>
+
+            <Border Style="{StaticResource border_for_button}"
+        Grid.Column="3">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF012539"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Button Content="Book The Plate"
+            Style="{StaticResource button_in_border}"
+            FontSize="16"
+            Click="book_the_plate_ev" />
+            </Border>
+
+        </Grid>
+
+        <Grid Grid.Column="2"
+              Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Border Style="{StaticResource border_for_button}"
+                    Width="140">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF012539"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Button Content="Apply Promotion"
+                        Style="{StaticResource button_in_border}"
+                        FontSize="16" Click="apply_promotion_ev"
+                         />
+            </Border>
+
+            <Border Grid.Column="1" 
+                    Width="140"
+                    Style="{StaticResource border_for_button}">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF012539"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Button Content="Abadon Promotion"
+                    Style="{StaticResource button_in_border}"
+                    FontSize="16" Click="abadon_promotion_ev"
+                    />
+            </Border>
+
+        </Grid>
+
+        <Grid Grid.Row="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Border Style="{StaticResource border_for_button}"
+                    Grid.Column="2">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF012539"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Button Content="Scrapped Plates"
+                        Style="{StaticResource button_in_border}"
+                        FontSize="14"
+                        Click="show_scrapped_plates_ev" />
+            </Border>
+
+            <Border Style="{StaticResource border_for_button}"
+                    Grid.Column="3">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF012539"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <DatePicker VerticalAlignment="Center" 
+                            x:Name="picker"
+                            DisplayDateStart="2024-03-29"/>
+            </Border>
+
+            <Border Style="{StaticResource border_for_button}">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF012539"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Button Content="Sold Plates"
+                        Style="{StaticResource button_in_border}" Click="unsold_plates_ev"/>
+            </Border>
+
+            <Border Style="{StaticResource border_for_button}"
+                    Grid.Column="1">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF012539"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Button Content="Unsold Plates"
+                        Style="{StaticResource button_in_border}" Click="unsold_pl_ev"/>
+            </Border>
+            
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Border Style="{StaticResource border_for_button}" Padding="4">
+                    <Border.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FF012539"/>
+                            <GradientStop Color="White" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                <TextBox BorderThickness="0"
+                         x:Name="name_box"
+                         FontSize="16"
+                         Text="Plate"
+                         Foreground="Gray"
+                         FontFamily="Impact"
+                         HorizontalContentAlignment="Center"
+                         VerticalContentAlignment="Center" GotFocus="focus_box"/>
+            </Border>
+
+            <Border Style="{StaticResource border_for_button}"
+                    Grid.Column="1"
+                    Padding="4">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF012539"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <TextBox BorderThickness="0"
+                         x:Name="band_box"
+                         Text="Band"
+                         Foreground="Gray"
+                         FontSize="16"
+                         FontFamily="Impact"
+                         HorizontalContentAlignment="Center"
+                         VerticalContentAlignment="Center" GotFocus="focus_box"/>
+            </Border>
+
+            <Border Style="{StaticResource border_for_button}"
+                    Grid.Column="2"
+                    Padding="4">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF012539"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <ComboBox x:Name="genre_combo_box"
+                          FontFamily="Impact"
+                          VerticalContentAlignment="Center"
+                          HorizontalContentAlignment="Center"/>
+            </Border>
+
+            <Border Style="{StaticResource border_for_button}"
+                    Grid.Column="3"
+                    Padding="4">    
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF012539"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <ComboBox x:Name="popularity_box"
+                          FontFamily="Impact"
+                          VerticalContentAlignment="Center"
+                          HorizontalContentAlignment="Center"/>
+            </Border>
+
+        </Grid>
+
+        <Border Style="{StaticResource border_for_button}"
+                Grid.Column="1"
+                Grid.Row="1"
+                Width="250">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF012539"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            <Button Content="Save Changes"
+                    Style="{StaticResource button_in_border}"
+                    Click="save_changes_ev"
+                    FontSize="22"/>
+        </Border>
+
+        <Grid Grid.Row="2"
+              Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Border Style="{StaticResource border_for_button}">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF012539"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Button Content="Search Name"
+            Style="{StaticResource button_in_border}"
+            FontSize="16" Click="name_pl_search"/>
+            </Border>
+
+            <Border Style="{StaticResource border_for_button}"
+                    Grid.Column="1">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF012539"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Button Content="Search Band"
+                        Style="{StaticResource button_in_border}"
+                        FontSize="16" Click="name_pl_search"/>
+            </Border>
+
+            <Border Style="{StaticResource border_for_button}"
+                    Grid.Column="2">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF012539"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Button Content="Search Genre"
+                        Style="{StaticResource button_in_border}"
+                        FontSize="16" Click="genre_search" />
+            </Border>
+
+        </Grid>
+
+        <Grid Grid.Column="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Label Content="Total Cash"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontSize="32"
+                   Foreground="White"
+                   FontFamily="Impact"/>
+
+            <Border Style="{StaticResource border_for_button}"
+                    Padding="0"
+                    Grid.Column="1">
+                <Label x:Name="cash_label"
+                       Content="0 $"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="25"
+                       Foreground="White"
+                       FontFamily="Impact"/>
+            </Border>
+
+        </Grid>
+
+        <Border Grid.Row="4"
+                CornerRadius="10"
+                Padding="5"
+                BorderBrush="White"
+                BorderThickness="1"
+                Grid.ColumnSpan="2"
+                Margin="0,72,357,0"
+                Grid.RowSpan="2">
+            <DataGrid x:Name="data_grid"
+                      Background="#97A6AE"/>
+        </Border>
+
+        <Border Grid.Row="4"
+                CornerRadius="10"
+                Padding="5"
+                BorderBrush="White"
+                BorderThickness="1"
+                Margin="8,72,8,0"
+                Grid.Column="1" Grid.RowSpan="2">
+            <DataGrid x:Name="customers_data_grid"
+                      Background="#97A6AE"/>
+        </Border>
+
+        <Border Grid.Row="4"
+                CornerRadius="10"
+                Padding="5"
+                BorderBrush="White"
+                BorderThickness="1"
+                Margin="8,72,8,0"
+                Grid.Column="3" Grid.RowSpan="2">
+            <DataGrid x:Name="prom_data_grid"
+                      Background="#97A6AE"/>
+        </Border>
+
 
     </Grid>
 </Window>
