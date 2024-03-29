@@ -11,6 +11,10 @@
   <ItemGroup>
     <None Remove="1670331109_1-kartinkin-net-p-vinilovaya-plastinka-kartinka-oboi-1.jpg" />
     <None Remove="gramplastinki-720x1280.jpg" />
+    <None Remove="icons8-play-в-круге-48.png" />
+    <None Remove="icons8-быстрая-перемотка-вперед-48.png" />
+    <None Remove="icons8-перемотка-назад-48.png" />
+    <None Remove="icons8-стоп-в-круге-48.png" />
     <None Remove="pngwing.com %281%29.png" />
     <None Remove="pngwing.com.png" />
   </ItemGroup>
@@ -30,6 +34,10 @@
   <ItemGroup>
     <Resource Include="1670331109_1-kartinkin-net-p-vinilovaya-plastinka-kartinka-oboi-1.jpg" />
     <Resource Include="gramplastinki-720x1280.jpg" />
+    <Resource Include="icons8-play-в-круге-48.png" />
+    <Resource Include="icons8-быстрая-перемотка-вперед-48.png" />
+    <Resource Include="icons8-перемотка-назад-48.png" />
+    <Resource Include="icons8-стоп-в-круге-48.png" />
     <Resource Include="pngwing.com (1).png" />
     <Resource Include="pngwing.com.png" />
   </ItemGroup>

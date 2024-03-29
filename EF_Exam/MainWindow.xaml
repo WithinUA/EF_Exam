@@ -29,7 +29,7 @@
                RenderTransformOrigin="0.5,0.5"
                Grid.Column="2"
                Grid.RowSpan="2"/>
-        
+
         <Border Grid.Row="3"
                 Grid.RowSpan="2"
                 Style="{StaticResource border_for_label}"
@@ -37,6 +37,89 @@
             <Label Content="PLATES"
                        Style="{StaticResource label_in_border}"/>
         </Border>
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Border Width="90"
+                    x:Name="play_border"
+                    CornerRadius="50"
+                    Opacity="0.5"
+                    >
+                <Border.Background>
+                    <ImageBrush ImageSource="/icons8-play-в-круге-48.png"/>
+                </Border.Background>
+                <Button Background="Transparent"
+                        x:Name="play_button"
+                        Style="{StaticResource player}"
+                        BorderThickness="0"
+                        Width="50"
+                        Height="50" Click="play_song_ev">
+                </Button>
+            </Border>
+
+            <Border Width="50"
+                    Height="50"
+                    x:Name="prev_border"
+                    VerticalAlignment="Top"
+                    CornerRadius="50"
+                    Opacity="0.5"
+                    Grid.Column="1">
+                <Border.Background>
+                    <ImageBrush ImageSource="/icons8-перемотка-назад-48.png"/>
+                </Border.Background>
+                <Button
+            x:Name="prev_button"
+            Style="{StaticResource player}"
+            BorderThickness="0"
+            Width="50"
+            Height="50" Click="prev_song_ev">
+                </Button>
+            </Border>
+
+            <Border Width="50"
+                    Height="50"
+                    x:Name="next_border"
+                    VerticalAlignment="Top"
+                    CornerRadius="50"
+                    Opacity="0.5"
+                    Grid.Column="2">
+                <Border.Background>
+                    <ImageBrush ImageSource="/icons8-быстрая-перемотка-вперед-48.png"/>
+                </Border.Background>
+                <Button Background="Transparent"
+                        x:Name="next_button"
+                        Style="{StaticResource player}"
+                        BorderThickness="0"
+                        Width="50"
+                        Height="50" Click="next_song_ev">
+                </Button>
+            </Border>
+
+            <Border Width="75"
+                    Height="75"
+                    Grid.Column="3"
+                    x:Name="stop_border"
+                    CornerRadius="50"
+                    Opacity="0.5">
+                    <Border.Background>
+                        <ImageBrush ImageSource="/icons8-стоп-в-круге-48.png"/>
+                    </Border.Background>
+                <Button Background="Transparent"
+                        x:Name="stop_button"
+                        Style="{StaticResource player}"
+                        BorderThickness="0"
+                        Width="50"
+                        Height="50" Click="stop_song_ev">
+                </Button>
+            </Border>
+
+        </Grid>
 
         <Border Grid.Column="1"
                 Grid.Row="3"
@@ -214,7 +297,7 @@
                 <Button Content="Unsold Plates"
                         Style="{StaticResource button_in_border}" Click="unsold_pl_ev"/>
             </Border>
-            
+
         </Grid>
 
         <Grid Grid.Row="2">
@@ -226,12 +309,12 @@
             </Grid.ColumnDefinitions>
 
             <Border Style="{StaticResource border_for_button}" Padding="4">
-                    <Border.Background>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#FF012539"/>
-                            <GradientStop Color="White" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Border.Background>
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF012539"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
                 <TextBox BorderThickness="0"
                          x:Name="name_box"
                          FontSize="16"
@@ -278,7 +361,7 @@
 
             <Border Style="{StaticResource border_for_button}"
                     Grid.Column="3"
-                    Padding="4">    
+                    Padding="4">
                 <Border.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FF012539"/>
@@ -297,12 +380,12 @@
                 Grid.Column="1"
                 Grid.Row="1"
                 Width="250">
-                <Border.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FF012539"/>
-                        <GradientStop Color="White" Offset="1"/>
-                    </LinearGradientBrush>
-                </Border.Background>
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF012539"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
             <Button Content="Save Changes"
                     Style="{StaticResource button_in_border}"
                     Click="save_changes_ev"
@@ -393,7 +476,7 @@
                 Margin="0,72,357,0"
                 Grid.RowSpan="2">
             <DataGrid x:Name="data_grid"
-                      Background="#97A6AE"/>
+                      Background="#97A6AE" SelectionChanged="select_ev"/>
         </Border>
 
         <Border Grid.Row="4"

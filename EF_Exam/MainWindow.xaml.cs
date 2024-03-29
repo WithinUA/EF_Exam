@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,46 +20,120 @@ namespace EF_Exam
     public partial class MainWindow : Window
     {
         Collections Store = new();
+        
         //Customer Customer;
         public MainWindow()
         {
-            //Login login = new Login();
-            //login.ShowDialog();
-            //if (login.DialogResult == true)
-            //{
+            Login login = new Login(Store);
+            login.ShowDialog();
+            if (login.DialogResult == true)
+            {
                 InitializeComponent();
-            Store.TotalCash = Store.Plates.Where(x => x.IsSold && x.SoldDate <= DateTime.Now).Sum(x => x.Price);
-            if (cash_label != null)
-                cash_label.Content = Store.TotalCash + " $";
-            //Customer = login.Customer;
+                Store.TotalCash = Store.Plates.Where(x => x.IsSold && x.SoldDate <= DateTime.Now).Sum(x => x.Price);
+                if (cash_label != null)
+                    cash_label.Content = Store.TotalCash + " $";
+                //Customer = login.Customer;
 
-            if (customers_data_grid != null)
-                customers_data_grid.ItemsSource = Store.Customers;
+                if (customers_data_grid != null)
+                    customers_data_grid.ItemsSource = Store.Customers;
 
-            if (prom_data_grid != null)
-                prom_data_grid.ItemsSource = Store.Promotions;
+                if (prom_data_grid != null)
+                    prom_data_grid.ItemsSource = Store.Promotions;
 
-            if (data_grid != null)
-                data_grid.ItemsSource = Store.Plates;
+                if (data_grid != null)
+                    data_grid.ItemsSource = Store.Plates;
 
-            if (genre_combo_box != null)
-                genre_combo_box.ItemsSource = Store.Genres.Select(x => x.Name);
+                if (genre_combo_box != null)
+                    genre_combo_box.ItemsSource = Store.Genres.Select(x => x.Name);
 
-            if (popularity_box != null)
-            {
-                List<string> popul = new() { "Popularity", "Day", "Week", "Month", "Year" };
-                popularity_box.ItemsSource = popul;
+                if (popularity_box != null)
+                {
+                    List<string> popul = new() { "Popularity", "Day", "Week", "Month", "Year" };
+                    popularity_box.ItemsSource = popul;
+                }
+
+                Loaded += (s, e) =>
+                {
+                    ColumnsClear();
+                    genre_combo_box.SelectedIndex = 0;
+                    popularity_box.SelectedIndex = 0;
+                    popularity_box.SelectionChanged += (s, e) =>
+                    {
+                        string select = popularity_box.SelectedItem as string;
+                        if (select == "Day")                                    // Беру только 5 популярнейших
+                        {
+                            var el = Store.Plates.Where(x => x.SoldDate?.Date == DateTime.Now.Date).OrderByDescending(x => x.SoldCount).Take(5).
+                            GroupBy(x => x.GenreId);
+                            if (el.Count() > 0)
+                            {
+                                Dictionary<string, int> gen_count = new();
+                                foreach (var ee in el)
+                                {
+                                    string gen = Store.Genres.FirstOrDefault(x => x.Id == ee.Key).Name;
+                                    gen_count.Add(gen, ee.Count());
+                                }
+                                data_grid.ItemsSource = gen_count.Select(x => new { GenreName = x.Key, SoldCopies = x.Value });
+                            }
+                            else
+                                MessageBox.Show("No results");
+                        }
+                        if (select == "Week")
+                        {
+                            var el = Store.Plates.Where(x => x.SoldDate?.Date <= DateTime.Now.Date && x.SoldDate?.Date > DateTime.Now.AddDays(-7).Date).OrderByDescending(x => x.SoldCount).Take(5).
+                            GroupBy(x => x.GenreId);
+                            if (el.Count() > 0)
+                            {
+                                Dictionary<string, int> gen_count = new();
+                                foreach (var ee in el)
+                                {
+                                    string gen = Store.Genres.FirstOrDefault(x => x.Id == ee.Key).Name;
+                                    gen_count.Add(gen, ee.Count());
+                                }
+                                data_grid.ItemsSource = gen_count.Select(x => new { GenreName = x.Key, SoldCopies = x.Value });
+                            }
+                            else
+                                MessageBox.Show("No results");
+                        }
+                        if (select == "Month")
+                        {
+                            var el = Store.Plates.Where(x => x.SoldDate?.Date <= DateTime.Now.Date && x.SoldDate?.Date > DateTime.Now.AddDays(-30).Date).OrderByDescending(x => x.SoldCount).Take(5).
+                            GroupBy(x => x.GenreId);
+                            if (el.Count() > 0)
+                            {
+                                Dictionary<string, int> gen_count = new();
+                                foreach (var ee in el)
+                                {
+                                    string gen = Store.Genres.FirstOrDefault(x => x.Id == ee.Key).Name;
+                                    gen_count.Add(gen, ee.Count());
+                                }
+                                data_grid.ItemsSource = gen_count.Select(x => new { GenreName = x.Key, SoldCopies = x.Value });
+                            }
+                            else
+                                MessageBox.Show("No results");
+                        }
+                        if (select == "Year")
+                        {
+                            var el = Store.Plates.Where(x => x.SoldDate?.Date <= DateTime.Now.Date && x.SoldDate?.Date > DateTime.Now.AddDays(-365).Date).OrderByDescending(x => x.SoldCount).Take(5).
+                            GroupBy(x => x.GenreId);
+                            if (el.Count() > 0)
+                            {
+                                Dictionary<string, int> gen_count = new();
+                                foreach (var ee in el)
+                                {
+                                    string gen = Store.Genres.FirstOrDefault(x => x.Id == ee.Key).Name;
+                                    gen_count.Add(gen, ee.Count());
+                                }
+                                data_grid.ItemsSource = gen_count.Select(x => new { GenreName = x.Key, SoldCopies = x.Value });
+                            }
+                            else
+                                MessageBox.Show("No results");
+                        }
+                    };
+                };
+            
             }
-
-            Loaded += (s, e) =>
-            {
-                ColumnsClear();
-                genre_combo_box.SelectedIndex = 0;
-                popularity_box.SelectedIndex = 0;
-            };
-            //}
-            //else
-            //    Close();
+            else
+                Close();
         }
 
 
@@ -74,6 +149,7 @@ namespace EF_Exam
             data_grid.Columns[4].Visibility = Visibility.Hidden;
             data_grid.Columns[6].Visibility = Visibility.Hidden;
             data_grid.Columns[8].Visibility = Visibility.Hidden;
+            data_grid.Columns[9].Visibility = Visibility.Hidden;
             data_grid.Columns[13].Visibility = Visibility.Hidden;
         }
 
@@ -433,6 +509,137 @@ namespace EF_Exam
                     ColumnsClear();
                 }
                 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void play_song_ev(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (data_grid.SelectedItem != null)
+                {
+                    Plate plate = data_grid.SelectedItem as Plate;
+                    if (plate.MusicFolder != null)
+                    {
+                        Store.songs = Directory.GetFiles(plate.MusicFolder, "*mp3");
+                        Store.song_index = 0;
+                        Store.player.Open(new Uri(Store.songs[Store.song_index], UriKind.Relative));
+                        Store.player.Play();
+                    }
+                    else
+                        MessageBox.Show("This plate doesn`t support music preview!");
+                }
+                else
+                {
+                    MessageBox.Show("Select some plate first");
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void select_ev(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (data_grid.SelectedItem != null)
+                {
+                    Plate plate = data_grid.SelectedItem as Plate;
+                    if (plate.MusicFolder != null)
+                    {
+                        play_border.Opacity = 1;
+                        prev_border.Opacity = 1;
+                        next_border.Opacity = 1;
+                        stop_border.Opacity = 1;
+                    }
+                    else
+                    {
+                        play_border.Opacity = 0.5;
+                        prev_border.Opacity = 0.5;
+                        next_border.Opacity = 0.5;
+                        stop_border.Opacity = 0.5;
+                    }
+                }
+                else
+                {
+                    play_border.Opacity = 0.5;
+                    prev_border.Opacity = 0.5;
+                    next_border.Opacity = 0.5;
+                    stop_border.Opacity = 0.5;
+                }
+            }
+            catch(Exception ex)
+            { 
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void prev_song_ev(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (data_grid.SelectedItem != null)
+                {
+                    Plate plate = data_grid.SelectedItem as Plate;
+                    if (plate.MusicFolder != null)
+                    {
+                        Store.player.Stop();
+                        if (Store.song_index == 0)
+                            Store.song_index = Store.songs.Length - 1;
+                        else
+                            Store.song_index--;
+                        Store.player.Open(new Uri(Store.songs[Store.song_index], UriKind.Relative));
+                        Store.player.Play();
+                    }
+                    else
+                        MessageBox.Show("This plate doesn`t support music preview!");
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void next_song_ev(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (data_grid.SelectedItem != null)
+                {
+                    Plate plate = data_grid.SelectedItem as Plate;
+                    if (plate.MusicFolder != null)
+                    {
+                        Store.player.Stop();
+                        if (Store.song_index == Store.songs.Length - 1)
+                            Store.song_index = 0;
+                        else
+                            Store.song_index++;
+                        Store.player.Open(new Uri(Store.songs[Store.song_index], UriKind.Relative));
+                        Store.player.Play();
+                    }
+                    else
+                        MessageBox.Show("This plate doesn`t support music preview!");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void stop_song_ev(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Store.player.Stop();
             }
             catch (Exception ex)
             {

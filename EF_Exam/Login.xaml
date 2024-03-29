@@ -29,18 +29,16 @@
         <Border Grid.Row="3" Width="280" Height="50" Background="#4EB4D4" CornerRadius="25" Padding="2">
             <Button Content="Log In" Width="250" Height="40" BorderThickness="0" FontSize="28" FontFamily="Impact" Background="Transparent" Click="login_button_ev"/>
         </Border>
-        <!--<Border Grid.Row="4" Width="180" Height="40" Background="#B2F3FF" CornerRadius="25" Padding="2">
-            <Button Content="Login as guest"
-                    Padding="0"
-                    Width="150"
-                    Height="40"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    FontSize="28"
-                    FontStyle="Italic"
-                    FontFamily="Gabriola"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Center" Click="guest_click_ev" />
-        </Border>-->
+        <TextBlock Text="Registration"
+                   Grid.Row="4"
+                   FontFamily="Impact"
+                   FontSize="22"
+                   Foreground="White"
+                   FontStyle="Italic"
+                   TextDecorations="Underline"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center" Cursor="Hand" MouseDown="click_ev"/>
+
+
     </Grid>
 </Window>

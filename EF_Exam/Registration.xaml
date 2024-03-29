@@ -1,0 +1,41 @@
+﻿<Window x:Class="EF_Exam.Registration"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EF_Exam"
+        mc:Ignorable="d"
+        Title="Registration" Height="400" Width="500">
+    <Window.Background>
+        <ImageBrush ImageSource="/1670331109_1-kartinkin-net-p-vinilovaya-plastinka-kartinka-oboi-1.jpg" Stretch="UniformToFill"/>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Border  Width="200" Height="50" Background="#D5D6D8" CornerRadius="25" Padding="2">
+            <TextBox x:Name="fname_box" Width="160" Height="40" Background="Transparent" BorderThickness="0" Text="First Name" Foreground="Gray" FontSize="18" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" GotFocus="textbox_ev"/>
+        </Border>
+        <Border Grid.Column="1" Width="200" Height="50" Background="#D5D6D8" CornerRadius="25" Padding="2">
+            <TextBox x:Name="lname_box" Width="160" Height="40" Background="Transparent" BorderThickness="0" Text="Last Name" Foreground="Gray" FontSize="18" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" GotFocus="textbox_ev"/>
+        </Border>
+        <Border Grid.Row="1" Width="200" Height="50" Background="#D5D6D8" CornerRadius="25" Padding="2">
+            <TextBox x:Name="login_box" Width="160" Height="40" Background="Transparent" BorderThickness="0" Text="Login" Foreground="Gray" FontSize="18" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" GotFocus="textbox_ev"/>
+        </Border>
+        <Border Grid.Row="1" Grid.Column="1" Width="200" Height="50" Background="#D5D6D8" CornerRadius="25" Padding="2">
+            <PasswordBox x:Name="pass_box" Width="160" Height="40" Background="Transparent" BorderThickness="0" Password="Password" Foreground="Gray" FontSize="18" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" GotFocus="pass_ev"/>
+        </Border>
+        <Border Grid.Row="2" Grid.ColumnSpan="2" Width="280" Height="50" Background="#4EB4D4" CornerRadius="25" Padding="2">
+            <Button Content="Register" Width="250" Height="40" BorderThickness="0" FontSize="28" FontFamily="Impact" Background="Transparent" Click="register_ev"/>
+        </Border>
+    </Grid>
+
+    
+
+</Window>

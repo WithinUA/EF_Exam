@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 
 namespace EF_Exam
 {
@@ -24,6 +25,10 @@ namespace EF_Exam
         public ObservableCollection<Promotion> Promotions { get; set; }
         public ObservableCollection<Plate> SoldPlates { get; set; }
         public ObservableCollection<Plate> ScrappedPlates { get; set; }
+
+        public MediaPlayer player = new();
+        public string[] songs;
+        public int song_index;
 
         public Collections()
         {
@@ -122,6 +127,7 @@ namespace EF_Exam
                     PublishingYear = 1986,
                     SelfCoast = 10,
                     Price = 15,
+                    MusicFolder = "Music/Master of Puppets/",
                     DeliveryDate = DateTime.Now.AddDays(-64),
                     CustomerId = rand.Next(1,11),
                     SoldDate = DateTime.Now.AddDays(-22),
@@ -267,17 +273,18 @@ namespace EF_Exam
             db.Plates.Add(new Plate()
             {
                 Name = "Queen",
-                TrackCount = 10,
-                BandId = 3, 
-                GenreId = 3, 
+                TrackCount = 14,
+                BandId = 3,
+                GenreId = 3,
                 PublisherId = rand.Next(1, 13),
                 PublishingYear = 1973,
                 SelfCoast = 10,
                 Price = 20,
+                MusicFolder = "Music/Queen/",
                 SoldCount = rand.Next(11, 31),
                 DeliveryDate = DateTime.Now.AddDays(-rand.Next(51, 70)),
                 CustomerId = rand.Next(1, 11),
-                SoldDate = DateTime.Now.AddDays(-rand.Next(11,51)),
+                SoldDate = DateTime.Now.AddDays(-rand.Next(11, 51)),
                 IsSold = true
             });
 
@@ -1136,6 +1143,15 @@ namespace EF_Exam
                 Genres = new(db.Genres);
                 Promotions = new(db.Promotions);
             }
+        }
+
+
+
+        public void AddCustomerToDb(Customer cust)
+        {
+            db.Customers.Add(cust);
+            db.SaveChanges();
+            Customers = new(db.Customers);
         }
 
     };

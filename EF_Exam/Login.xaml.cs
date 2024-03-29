@@ -20,10 +20,16 @@ namespace EF_Exam
     /// </summary>
     public partial class Login : Window
     {
-        Collections coll = new();
+        Collections coll;
         //public Customer Customer { get; set; }
         public Login()
         {
+            InitializeComponent();
+        }
+
+        public Login(Collections c)
+        {
+            coll = c;
             InitializeComponent();
         }
 
@@ -89,6 +95,20 @@ namespace EF_Exam
             {
                 (sender as PasswordBox).Password = string.Empty;
                 (sender as PasswordBox).Foreground = System.Windows.Media.Brushes.Black;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void click_ev(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                Registration reg = new(coll);
+                reg.Show();
+
             }
             catch (Exception ex)
             {

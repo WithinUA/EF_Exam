@@ -19,6 +19,8 @@ namespace EF_Exam
         public int? GenreId { get; set; }
         public Genre? Genre { get; set; }
         public int? PublisherId { get; set; }
+        [NotMapped]
+        public string? MusicFolder { get; set; }
         public Publisher? Publisher { get; set; }
         public int PublishingYear { get; set; } = 1997;
         public decimal SelfCoast { get; set; } = 8m;
@@ -58,7 +60,7 @@ namespace EF_Exam
         public int Id { get; set; }
         public string FirstName { get; set; } = "NoNameCustomer";
         public string LastName { get; set; }
-        public decimal SpentMoney { get; set; }
+        public decimal SpentMoney { get; set; } = 0;
         public int DiscountPercent { get; set; } = 0;
         [NotMapped]
         private string login;
@@ -69,7 +71,13 @@ namespace EF_Exam
         [NotMapped]
         public string Password { get { return password; } set { password = value; } }
         public Customer() { }
-        public Customer(string l, string p) { login = l; password = p; }
+        public Customer(string fname, string lname, string l, string p)
+        { 
+            FirstName = fname;
+            LastName = lname;
+            login = l;
+            password = p;
+        }
     }
     public class Promotion
     {
